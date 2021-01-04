@@ -1,79 +1,43 @@
-# CanSat 2021
+# __CanSat 2021__
+___
+##  __1__
+* temperatura
 
-__-1__
-temperatura
+* atterraggio area definita
 
-atterraggio area definita
+* pressione dell'aria
 
-pressione dell'aria
+* tracciamento gps
 
-tracciamento gps
+___
+##  __2__
+* Creare un app web per monitorare i dati raccolti
 
+* Mappare l'inquinamento ad ogni altitudine (Pm10-Pm25)
 
-__-2__
-Creare un app web per monitorare i dati raccolti
+* Monitorare i raggi UV
 
-Mappare l'inquinamento ad ogni altitudine (Pm10-Pm25)
+* Misurare la massima la minima e la media di pm10 per ogni altezza
 
-Monitorare i raggi UV
+* monitorare l'altezza er la velocità massima
 
-Misurare la massima la minima e la media di pm10 per ogni altezza
+* misurare il tempo di salita e di discesa
 
-monitorare l'altezza er la velocità massima
+* misurare oscillazione
 
-misurare il tempo di salita e di discesa
+* (monitoraggio parametri ambientali) valutare dimensioni sensore
 
+___
+###  __Sensori__
 
-2 misurare oscillazione
+* termometro
 
-3 (monitoraggio parametri ambientali) valutare dimensioni sensore
+* barometro
 
+* sensore pm10-pm25
 
-__sensori__
-termometro
+* gps
 
-barometro
+* altimetro
 
-sensore pm10-pm25
-
-gps
-
-altimetro
-
-sensore raggi UV
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* sensore raggi UV
