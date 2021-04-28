@@ -6,9 +6,9 @@ import "./AirTemperature.sass";
 
 function AirTemperature(props) {
   return (
-    <div class="air-temperature-comp">
-      <h1 class="title-text">AirTemperature</h1>
-      <h1 class="title-text">{props.temperature}</h1>
+    <div id="air-temperature-comp">
+      <span id="title-text">AirTemperature</span>
+      <span id="title-text">{props.temperature}</span>
     </div>
   );
 }

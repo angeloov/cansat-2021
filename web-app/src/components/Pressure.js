@@ -5,8 +5,8 @@ import "./Pressure.sass";
 function PressureFn() {
   return (
     <div id="PressureContainer">
-      <div class="Text">Athmosferic Pressure</div>
-      <div class="DATA">200 pa</div>
+      <div id="PressureTitle">Athmosferic Pressure</div>
+      <div id="Pressure">200 pa</div>
     </div>
   );
 }

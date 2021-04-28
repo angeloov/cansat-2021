@@ -5,7 +5,8 @@ import "./Altitude.sass";
 function Altitude() {
   return (
     <div id="AltitudeContainer">
-      <div>Altitude</div>
+      <span id="AltitudeTitle">Altitude</span>
+      <span id="Altitude"></span>
     </div>
   );
 }

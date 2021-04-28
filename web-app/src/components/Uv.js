@@ -5,8 +5,8 @@ import "./Uv.sass"
 function UvFn(){
     return (
         <div id="UvContainer">
-            <span class="Text">UV</span>
-            <span class="DATA">//341 nm</span>
+            <span id="UvTitle">UV</span>
+            <span id="Uv">341 nm</span>
         </div>
         
     )
