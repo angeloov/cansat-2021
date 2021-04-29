@@ -1,14 +1,10 @@
 import React from "react";
 
-import "./AirTemperature.sass";
-
-// <AirTemperature temperature="Valore" />
-
-function AirTemperature(props) {
+function AirTemperature({ value }) {
   return (
-    <div id="air-temperature-comp">
-      <span id="title-text">AirTemperature</span>
-      <span id="title-text">{props.temperature}</span>
+    <div className="quadrant">
+      <h1 className="title-text">Air Temperature</h1>
+      <h1 className="value-text">{value + " °C"}</h1>
     </div>
   );
 }

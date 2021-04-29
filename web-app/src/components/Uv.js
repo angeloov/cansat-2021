@@ -1,15 +1,12 @@
 import React from "react";
 
-import "./Uv.sass"
-
-function UvFn(){
-    return (
-        <div id="UvContainer">
-            <span id="UvTitle">UV</span>
-            <span id="Uv">341 nm</span>
-        </div>
-        
-    )
+function Uv({ value }) {
+  return (
+    <div className="quadrant">
+      <h1 className="title-text">UV</h1>
+      <h1 className="value-text">{value + " nm"}</h1>
+    </div>
+  );
 }
 
-export default UvFn;
+export default Uv;

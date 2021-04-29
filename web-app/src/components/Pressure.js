@@ -1,14 +1,12 @@
 import React from "react";
 
-import "./Pressure.sass";
-
-function PressureFn() {
+function Pressure({ value }) {
   return (
-    <div id="PressureContainer">
-      <div id="PressureTitle">Athmosferic Pressure</div>
-      <div id="Pressure">200 pa</div>
+    <div className="quadrant">
+      <h1 className="title-text">Athmosferic Pressure</h1>
+      <h1 className="value-text">{value + " Pa"}</h1>
     </div>
   );
 }
 
-export default PressureFn;
+export default Pressure;
