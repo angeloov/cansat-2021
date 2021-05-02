@@ -35,7 +35,7 @@ function Altitude({ value }) {
         <h1 className="title-text altitude-title">Altitude</h1>
         <h1 className="value-text">{value + " m"}</h1>
       </span>
-      <Line data={data} options={options} width="400" height="200" />
+      <Line data={data} options={options} width="450" height="250" />
     </div>
   );
 }
