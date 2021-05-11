@@ -22,7 +22,8 @@ const App = () => {
         <AirTemperature value="30" />
         <Pressure value={20} />
         <Uv value={20} />
-        {/* <Status /> */}
+        <Status/>
+        <LaunchStatus ConnectionStatusVar={true}/>
       </div>
     </div>
   );
