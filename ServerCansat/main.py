@@ -1,6 +1,7 @@
 from flask import Flask, render_template 
 from flask_socketio import SocketIO , send, emit
 import random
+import serial
 import mysql.connector
 from mysql.connector import errorcode
 
@@ -30,15 +31,26 @@ def stats():
 
 @socketio.on('my event')
 def handle_my_custom_event(json):
-    print('received json: ' + str(json))
-    emit('change value', {'data' : random.randrange(0,40)})
+    
+    temperatura = random.randrange(0,40)
+    atterraggio = "'0,1,2'"
+    pressione = random.randrange(0,40)
+    gps = "'32,42,377'"
+    
     comando = "INSERT INTO cansatdata.data"
     elencoCampi = " (temperatura,areaatterraggio,pressione,gps)"
-    elencoValori = " VALUES (" + str(random.randrange(0,40)) + " , " + "'0,1,2'" + " , " + str(random.randrange(0,40)) + " , " + "'32,42,377'" + ");"
+    elencoValori = " VALUES (" + str(temperatura) + " , " + atterraggio + " , " + str(pressione) + " , " + gps + ");"
 
     query = comando + elencoCampi + elencoValori
 
     curs.execute(query)
+    
+    emit('change value', {
+        'temperatura' : temperatura,
+        'atterraggio' : atterraggio,
+        'pressione'   : pressione,
+        'gps'         : gps
+    })
 
     curs.execute("SELECT * FROM cansatdata.data")
   
