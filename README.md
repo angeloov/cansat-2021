@@ -1,5 +1,23 @@
 # **CanSat 2021**
 
+## Cose ancora da fare:
+
+- Andrea Berta: 
+    - Collegare alle porte per leggere i dati
+
+- Cristian Alasotto:
+    - Sistemare posizionamento componenti
+
+- Angelo Voicu: 
+    
+- Matteo Orefice: 
+    - Finito
+ 
+
+
+
+
+
 ## Proprietà da misurare
 
 - temperatura

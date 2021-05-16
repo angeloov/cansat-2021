@@ -17,8 +17,14 @@ else {
 }
 */
 function Status({ConnectionStatusVar}) {
+  let isConnected = true;
+
   return <div id="ConnectionStatus">
-    <span id="Status">{/*print*/}</span>
+    <img src=".../web-app/src/Image/can-icon.jpg"></img>
+    /*
+      <div id="Status">{{background-color: (isConnected ? "green" : "red")}}</div> 
+    */
+    
   </div>;
 }
 
