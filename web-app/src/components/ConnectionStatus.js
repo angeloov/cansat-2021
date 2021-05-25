@@ -8,8 +8,8 @@ function Status({ ConnectionStatusVar }) {
 
   return (
     <div id="ConnectionStatus">
-      <img src={CanIcon} />
-
+      <img src={CanIcon} id="Image" />
+      <p id="Text">CanSat Connected</p>
       <div id="Status" style={{ backgroundColor: isConnected ? "green" : "red" }}></div>
     </div>
   );

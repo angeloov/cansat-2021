@@ -10,6 +10,8 @@ import Uv from "./components/Uv";
 import Header from "./components/Header";
 import Pressure from "./components/Pressure";
 
+import ConnectionStatus from "./components/ConnectionStatus";
+
 import socket from "./config/socket-io.js";
 // import axios from "axios";
 
@@ -29,6 +31,7 @@ const App = () => {
         <AirTemperature value="30" />
         <Pressure value={20} />
         <Uv value={20} />
+        <ConnectionStatus />
       </div>
     </div>
   );
