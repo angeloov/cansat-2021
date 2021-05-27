@@ -4,18 +4,17 @@ import { Line, defaults } from "react-chartjs-2";
 import "./Altitude.sass";
 
 function Altitude({ value }) {
+  const [altitudeDatapoints, setAltitudeDatapoints] = useState([]);
+  const [labels, setLabels] = useState([]);
+  const [newValueIndex, setNewValueIndex] = useState(0);
+
   defaults.color = "#FAFAFA"; // color of the axes
 
-  const datapoints = [0, 20, 20, 60, 60, 120, 10, 180, 120, 125, 105, 110, 170];
-  const labels = [];
-  for (let i = 0; i < datapoints.length; ++i) {
-    labels.push(i.toString());
-  }
   const data = {
     labels: labels,
     datasets: [
       {
-        data: datapoints,
+        data: altitudeDatapoints,
         backgroundColor: "#ffffff0f",
         borderColor: "#FAFAFA",
         fill: true,
@@ -28,6 +27,12 @@ function Altitude({ value }) {
   const options = {
     plugins: { legend: { display: false } },
   };
+
+  useEffect(() => {
+    setAltitudeDatapoints(altitudeDatapoints.concat([value]));
+    setLabels(labels.concat([newValueIndex]));
+    setNewValueIndex(newValueIndex + 1);
+  }, [value]);
 
   return (
     <div className="altitude-quadrant">
