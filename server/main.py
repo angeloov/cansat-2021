@@ -13,13 +13,13 @@ import mysql.connector
 from mysql.connector import errorcode
 
 # global vars
-ComPort = 'COM12'
+ComPort = 'COM3'
 isConnected = False
 
 dbCansat = mysql.connector.connect(
     host='127.0.0.1',
     user='root',
-    passwd='cansat',
+    passwd='secret',
     database='CansatData'
 ) 
 
@@ -44,13 +44,14 @@ def startSendingDataToClient():
     print("Client connesso")
 
     try:
-        # esp32Rx = serial.Serial(ComPort, 9600, timeout = 0)      
+        esp32Rx = serial.Serial(ComPort, 9600, timeout = 0)      
         isConnected = True
         timeInSeconds = 0
         
         while True:
-            # inputLine = esp32Rx.readline()
-            inputLine = "P10T10.2H9.198"
+            inputLine1 = esp32Rx.readline()
+            inputLine = str(inputLine1)
+            # inputLine = "P10T10.2H9.198"
 
             timeInSeconds += 0.1
 
