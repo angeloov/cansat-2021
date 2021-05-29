@@ -24,19 +24,19 @@ const App = () => {
     socket.on("cansat-data", (data) => {
       const {
         seconds,
-        temperature,
-        humidity,
-        pressure,
-        altitude,
+        temperatura,
+        umidita,
+        pressione,
+        altitudine,
         isConnected,
       } = data;
       console.log(data);
 
       setTimeInSeconds(seconds);
-      setTemperature(temperature);
-      setPressure(pressure);
-      setAltitude(altitude);
-      setHumidity(humidity);
+      setTemperature(temperatura);
+      setPressure(pressione);
+      setAltitude(altitudine);
+      setHumidity(umidita);
       setServerIsConnected(isConnected);
     });
   }, []);

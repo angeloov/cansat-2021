@@ -21,7 +21,7 @@ dbCansat = mysql.connector.connect(
     user='root',
     passwd='cansat',
     database='CansatData'
-) 
+)
 
 app = Flask(__name__)
 CORS(app)
@@ -44,14 +44,13 @@ def startSendingDataToClient():
     print("Client connesso")
 
     try:
-        # esp32Rx = serial.Serial(ComPort, 9600, timeout = 0)      
+        esp32Rx = serial.Serial(ComPort, 9600, timeout = 0)      
         isConnected = True
         timeInSeconds = 0
         
         while True:
-            # inputLine = esp32Rx.readline()
-            inputLine = "P10T10.2H9.198"
-
+            inputLine = esp32Rx.readline()
+            
             timeInSeconds += 0.1
 
             parsedString = re.match("P(\d+\.?\d*)T(\d+\.?\d*)H(\d+\.?\d*)", inputLine).groups()
