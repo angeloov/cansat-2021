@@ -21,7 +21,7 @@ dbCansat = mysql.connector.connect(
     user='root',
     passwd='secret',
     database='CansatData'
-) 
+)
 
 app = Flask(__name__)
 CORS(app)
@@ -49,10 +49,8 @@ def startSendingDataToClient():
         timeInSeconds = 0
         
         while True:
-            inputLine1 = esp32Rx.readline()
-            inputLine = str(inputLine1)
-            # inputLine = "P10T10.2H9.198"
-
+            inputLine = esp32Rx.readline()
+            
             timeInSeconds += 0.1
 
             parsedString = re.match("P(\d+\.?\d*)T(\d+\.?\d*)H(\d+\.?\d*)", inputLine).groups()
