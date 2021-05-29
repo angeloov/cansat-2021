@@ -5,10 +5,12 @@ import LaunchTimer from "./LaunchTimer";
 import StartButton from "./StartButton";
 import ConnectionStatus from "./ConnectionStatus";
 
+import socket from "../config/socket-io";
+
 const secondsToFormattedString = (seconds) =>
   new Date(seconds * 1000).toISOString().substr(14, 5);
 
-export default function Header({ timeInSeconds, socket }) {
+export default function Header({ timeInSeconds, isConnected }) {
   return (
     <header className="header-component">
       <div>
@@ -21,8 +23,8 @@ export default function Header({ timeInSeconds, socket }) {
       />
 
       <div className="left-container">
-        <ConnectionStatus />
-        <StartButton socket={socket} />
+        <ConnectionStatus isConnected={isConnected} />
+        <StartButton />
       </div>
     </header>
   );

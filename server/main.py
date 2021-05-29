@@ -12,14 +12,16 @@ import serial
 import mysql.connector
 from mysql.connector import errorcode
 
+# global vars
 ComPort = 'COM12'
+isConnected = False
 
 dbCansat = mysql.connector.connect(
     host='127.0.0.1',
     user='root',
     passwd='cansat',
     database='CansatData'
-)
+) 
 
 app = Flask(__name__)
 CORS(app)
@@ -32,37 +34,32 @@ curs.execute("select exists(select * from CansatData.data where temperatura=%s)"
 if curs.fetchone()[0] == None :
     curs.execute("CREATE TABLE data (temperatura float,umidita float,pressione float,altitudine float );")
 
-@app.route("/")
-def home():
-    return "HEYY"
-    return render_template("/home.html")
-
-@app.route("/stats")
-def stats():
-    return render_template("/statistics.html")
+def calculateAltitude(pressure):
+    airDensity = 1.29
+    gravitationalConstant = 9.81
+    return (pressure / (airDensity * gravitationalConstant))
 
 @socketio.on('start-receiving-data') # event fired by client
 def startSendingDataToClient():
+    print("Client connesso")
+
     try:
-
-        esp32Rx = serial.Serial(ComPort, 9600, timeout = 0)
-
-        print("Client connesso")
-
+        # esp32Rx = serial.Serial(ComPort, 9600, timeout = 0)      
+        isConnected = True
         timeInSeconds = 0
         
         while True:
-
-            inputLine = esp32Rx.readline()
+            # inputLine = esp32Rx.readline()
+            inputLine = "P10T10.2H9.198"
 
             timeInSeconds += 0.1
 
-            parsedString = re.match("T(\d+\.?\d*)P(\d+\.?\d*)A(\d+\.?\d*)U(\d+\.?\d*)",inputLine).groups()
+            parsedString = re.match("P(\d+\.?\d*)T(\d+\.?\d*)H(\d+\.?\d*)", inputLine).groups()
 
+            pressione = parsedString[0]
             temperatura = parsedString[1]
             umidita = parsedString[2]
-            pressione = parsedString[3]
-            altitudine = parsedString[4]
+            altitudine =  calculateAltitude(float(pressione))
             
             comando = "INSERT INTO cansatdata.data"
             elencoCampi = " (temperatura,umidita,pressione,altitudine)"
@@ -72,6 +69,7 @@ def startSendingDataToClient():
             curs.execute(query)
             
             emit('cansat-data', {
+                'isConnected' : isConnected,
                 'seconds'     : round(timeInSeconds, 1),
                 'temperatura' : temperatura,
                 'umidita'     : umidita,
@@ -80,7 +78,6 @@ def startSendingDataToClient():
             })
 
             time.sleep(0.1)
-            
 
     except Exception as e:
         print('error on line {}'.format(sys.exc_info()[-1].tb_lineno), " ", type(e).__name__, " ", e)

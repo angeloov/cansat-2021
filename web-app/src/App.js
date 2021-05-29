@@ -12,17 +12,24 @@ import Pressure from "./components/Pressure";
 
 import socket from "./config/socket-io.js";
 
-
 const App = () => {
   const [timeInSeconds, setTimeInSeconds] = useState(0);
   const [temperature, setTemperature] = useState(0);
   const [pressure, setPressure] = useState(0);
   const [altitude, setAltitude] = useState(0);
   const [humidity, setHumidity] = useState(0);
+  const [serverIsConnected, setServerIsConnected] = useState(false);
 
   useEffect(() => {
     socket.on("cansat-data", (data) => {
-      const { seconds, temperature, humidity, pressure, altitude } = data;
+      const {
+        seconds,
+        temperature,
+        humidity,
+        pressure,
+        altitude,
+        isConnected,
+      } = data;
       console.log(data);
 
       setTimeInSeconds(seconds);
@@ -30,12 +37,13 @@ const App = () => {
       setPressure(pressure);
       setAltitude(altitude);
       setHumidity(humidity);
+      setServerIsConnected(isConnected);
     });
   }, []);
 
   return (
     <div>
-      <Header timeInSeconds={timeInSeconds} socket={socket} />
+      <Header timeInSeconds={timeInSeconds} isConnected={serverIsConnected} />
 
       <div className="quadrants-container">
         <Altitude value={altitude} />

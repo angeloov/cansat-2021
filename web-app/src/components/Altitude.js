@@ -35,7 +35,7 @@ function Altitude({ value }) {
   }, [value]);
 
   return (
-    <div className="altitude-quadrant">
+    <div className="altitude-quadrant quadrant">
       <span className="altitude-top">
         <h1 className="title-text altitude-title">Altitude</h1>
         <h1 className="value-text">{value + " m"}</h1>
