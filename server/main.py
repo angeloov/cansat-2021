@@ -14,7 +14,6 @@ from mysql.connector import errorcode
 
 # global vars
 ComPort = 'COM3'
-isConnected = False
 
 dbCansat = mysql.connector.connect(
     host='127.0.0.1',
@@ -38,6 +37,10 @@ def calculateAltitude(pressure):
     airDensity = 1.29
     gravitationalConstant = 9.81
     return (pressure / (airDensity * gravitationalConstant))
+
+@app.route("/")
+def ciao():
+    return "fica"
 
 @socketio.on('start-receiving-data') # event fired by client
 def startSendingDataToClient():
@@ -68,7 +71,6 @@ def startSendingDataToClient():
             curs.execute(query)
             
             emit('cansat-data', {
-                'isConnected' : isConnected,
                 'seconds'     : round(timeInSeconds, 1),
                 'temperatura' : temperatura,
                 'umidita'     : umidita,
@@ -80,6 +82,46 @@ def startSendingDataToClient():
 
     except Exception as e:
         print('error on line {}'.format(sys.exc_info()[-1].tb_lineno), " ", type(e).__name__, " ", e)
+
+@socketio.on('replay-data') # event fired by client
+def SendReplayDataToClient():
+
+    timeInSeconds = 0
+    lineindex = 0
+
+    precline = ""
+    precindex = -1
+
+    counter = 0
+
+
+    Dati = open("Server/DatiLancioCansat20210529.txt","r")
+
+    for line in Dati:
+        lineindex = lineindex + 1
+        precindex = precindex + 1
+        counter = counter + 1
+        if counter == 2:
+            counter = 0
+            basevalues = re.match("\*P(\d+\.?\d*)T(\d+\.?\d*)H(\d+\.?\d*)#", str(line))
+            if basevalues:
+                array = basevalues.groups()
+                Pressione = array[0]
+                Temperatura = array[1]
+                Umidita = array[2]
+                Altitudine = calculateAltitude(Pressione)
+
+                timeInSeconds += 1
+
+                emit('cansat-data', {
+                    'seconds'     : round(timeInSeconds, 1),
+                    'temperatura' : Temperatura,
+                    'umidita'     : Umidita,
+                    'pressione'   : Pressione,
+                    'altitudine'  : Altitudine
+                })
+            
+        precline = line
 
 if __name__ == "__main__":
     socketio.run(app)
