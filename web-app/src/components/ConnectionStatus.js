@@ -7,10 +7,8 @@ function Status({ isConnected }) {
   return (
     <div id="ConnectionStatus">
       <img src={CanIcon} id="Image" />
-      <div
-        className="status"
-        style={{ backgroundColor: isConnected ? "green" : "red" }}
-      ></div>
+
+      <div className="status" style={{ backgroundColor: isConnected ? "green" : "red" }}></div>
       <p id="Text">CanSat {isConnected ? " connected" : " disconnected"}</p>
     </div>
   );

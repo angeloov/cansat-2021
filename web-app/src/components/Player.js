@@ -1,30 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Player.sass";
 import playIcon from "../assets/images/play-icon.svg";
 
 export default function Player() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [sliderValue, setSliderValue] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
 
-  const maxSliderValue = 60 * 10;
-
-  const handleChange = event => {
-    setSliderValue(event.target.value);
-  };
+  useEffect(() => {
+    // setInterval(() => {
+    //   setCurrentIndex(currentIndex + 1);
+    // }, 100);
+  }, []);
 
   return (
     <div className="player-component">
-      <input
-        className="player-slider"
-        type="range"
-        min="0"
-        max={maxSliderValue}
-        value={sliderValue}
-        onChange={handleChange}
-        step="1"
-      />
-
       <button className="player-button" onClick={() => setIsPlaying(!isPlaying)}>
         <img src={playIcon} alt="Play icon" />
       </button>

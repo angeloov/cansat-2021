@@ -14,6 +14,9 @@ import Player from "./components/Player";
 
 import socket from "./config/socket-io.js";
 
+import { useDispatch, useSelector } from "react-redux";
+import { populateCansatState } from "./redux/slices/cansatDataSlice.js";
+
 class CansatDataUnit {
   constructor(data) {
     const { seconds, temperatura, umidita, pressione, altitudine } = data;
@@ -27,36 +30,39 @@ class CansatDataUnit {
 }
 
 const App = () => {
-  const [dataHistory, setDataHistory] = useState([]);
+  const dispatch = useDispatch();
 
-  const [timeInSeconds, setTimeInSeconds] = useState(0);
-  const [temperature, setTemperature] = useState(0);
-  const [pressure, setPressure] = useState(0);
-  const [altitude, setAltitude] = useState(0);
-  const [humidity, setHumidity] = useState(0);
+  // const getDataHistoryItem = index => {
+  //   return dataHistory[index]; // to do
+  // };
 
-  const getDataHistoryItem = index => {
-    return dataHistory[index];
-  };
+  useSelector(state => console.log(state.cansat));
 
   useEffect(() => {
     socket.emit("replay-data");
 
     socket.on("cansat-data", data => {
-      const currDataUnit = new CansatDataUnit(data);
-      setDataHistory(dataHistory.concat([currDataUnit]));
+      setInterval(() => {
+        const currDataUnit = new CansatDataUnit(data);
+
+        dispatch(
+          populateCansatState({
+            ...currDataUnit,
+          })
+        );
+      });
     });
   }, []);
 
   return (
     <div>
-      <Header timeInSeconds={timeInSeconds} />
+      <Header timeInSeconds={useSelector(state => state.cansat.seconds)} />
 
       <div className="quadrants-container">
-        <Altitude value={altitude} />
-        <AirTemperature value={temperature} />
-        <Pressure value={pressure} />
-        <Humidity value={humidity} />
+        <Altitude value={useSelector(state => state.cansat.altitude)} />
+        <AirTemperature value={useSelector(state => state.cansat.temperature)} />
+        <Pressure value={useSelector(state => state.cansat.pressure)} />
+        <Humidity value={useSelector(state => state.cansat.humidity)} />
 
         <Player />
       </div>

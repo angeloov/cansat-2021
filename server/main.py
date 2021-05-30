@@ -9,18 +9,18 @@ import random
 from flask_cors import CORS
 
 import serial
-import mysql.connector
-from mysql.connector import errorcode
+# import mysql.connector
+# from mysql.connector import errorcode
 
 # global vars
 ComPort = 'COM3'
 
-dbCansat = mysql.connector.connect(
-    host='127.0.0.1',
-    user='root',
-    passwd='secret',
-    database='CansatData'
-)
+# dbCansat = mysql.connector.connect(
+#     host='127.0.0.1',
+#     user='root',
+#     passwd='secret',
+#     database='CansatData'
+# )
 
 app = Flask(__name__)
 CORS(app)
@@ -28,10 +28,10 @@ CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-curs = dbCansat.cursor()
-curs.execute("select exists(select * from CansatData.data where temperatura=%s)", ('data',))
-if curs.fetchone()[0] == None :
-    curs.execute("CREATE TABLE data (temperatura float,umidita float,pressione float,altitudine float );")
+# curs = dbCansat.cursor()
+# curs.execute("select exists(select * from CansatData.data where temperatura=%s)", ('data',))
+# if curs.fetchone()[0] == None :
+#     curs.execute("CREATE TABLE data (temperatura float,umidita float,pressione float,altitudine float );")
 
 def calculateAltitude(pressure):
     airDensity = 1.29
@@ -40,7 +40,7 @@ def calculateAltitude(pressure):
 
 @app.route("/")
 def ciao():
-    return "fica"
+    return "prova"
 
 @socketio.on('start-receiving-data') # event fired by client
 def startSendingDataToClient():
@@ -68,7 +68,7 @@ def startSendingDataToClient():
             elencoValori = " VALUES (" + str(temperatura) + " , " + str(umidita) + " , " + str(pressione) + " , " + str(altitudine) + ");"
 
             query = comando + elencoCampi + elencoValori
-            curs.execute(query)
+            # curs.execute(query)
             
             emit('cansat-data', {
                 'seconds'     : round(timeInSeconds, 1),
@@ -85,7 +85,6 @@ def startSendingDataToClient():
 
 @socketio.on('replay-data') # event fired by client
 def SendReplayDataToClient():
-
     timeInSeconds = 0
     lineindex = 0
 
@@ -94,8 +93,7 @@ def SendReplayDataToClient():
 
     counter = 0
 
-
-    Dati = open("Server/DatiLancioCansat20210529.txt","r")
+    Dati = open("DatiLancioCansat20210529.txt","r")
 
     for line in Dati:
         lineindex = lineindex + 1
@@ -109,7 +107,7 @@ def SendReplayDataToClient():
                 Pressione = array[0]
                 Temperatura = array[1]
                 Umidita = array[2]
-                Altitudine = calculateAltitude(Pressione)
+                Altitudine = calculateAltitude(float(Pressione))
 
                 timeInSeconds += 1
 
@@ -120,7 +118,7 @@ def SendReplayDataToClient():
                     'pressione'   : Pressione,
                     'altitudine'  : Altitudine
                 })
-            
+
         precline = line
 
 if __name__ == "__main__":

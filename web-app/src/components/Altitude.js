@@ -3,9 +3,14 @@ import { Line, defaults } from "react-chartjs-2";
 
 import "./Altitude.sass";
 
+import { useSelector, useDispatch } from "react-redux";
+import { populateCansatState } from "../redux/slices/cansatDataSlice.js";
+
 function Altitude({ value }) {
-  const [altitudeDatapoints, setAltitudeDatapoints] = useState([]);
-  const [labels, setLabels] = useState([]);
+  const dispatch = useDispatch();
+  const altitudeDatapoints = useSelector(state => state.cansat.altitudeDatapoints);
+  const labels = useSelector(state => state.cansat.labels);
+
   const [newValueIndex, setNewValueIndex] = useState(0);
 
   defaults.color = "#FAFAFA"; // color of the axes
@@ -15,7 +20,7 @@ function Altitude({ value }) {
     datasets: [
       {
         data: altitudeDatapoints,
-        backgroundColor: "#ffffff0f",
+        backgroundColor: "#ffff0f",
         borderColor: "#FAFAFA",
         fill: true,
         cubicInterpolationMode: "monotone",
@@ -28,11 +33,17 @@ function Altitude({ value }) {
     plugins: { legend: { display: false } },
   };
 
+  const newAltitudeDatapoints = altitudeDatapoints.concat([altitudeDatapoints]);
+  dispatch(
+    populateCansatState({
+      altitudeDatapoints: newAltitudeDatapoints,
+    })
+  );
+
   useEffect(() => {
-    setAltitudeDatapoints(altitudeDatapoints.concat([value]));
-    setLabels(labels.concat([newValueIndex]));
+    // setLabels(labels.concat([newValueIndex]));
     setNewValueIndex(newValueIndex + 1);
-  }, [value]);
+  }, []);
 
   return (
     <div className="altitude-quadrant quadrant">

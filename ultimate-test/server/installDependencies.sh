@@ -1,0 +1,1 @@
+python3 -m pip install flask flask_socketio flask_cors mysql serial
